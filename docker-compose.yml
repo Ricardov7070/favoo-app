@@ -1,9 +1,7 @@
-version: '3.8'
-
 services:
   laravel:
     build:
-      context: .\docker\php\
+      context: ./docker/php/
       dockerfile: Dockerfile
     image: laravel-php-node:22.04
     container_name: laravel-container
@@ -23,7 +21,7 @@ services:
       DB_PASSWORD: ${DB_PASSWORD}
     volumes:
       - .:/var/www/laravel
-      - .Documents/Projetos/favoo-app/docker/default.conf:/etc/nginx/conf.d/default.conf
+      - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
     depends_on:
       - mysql
       - redis
@@ -75,7 +73,7 @@ services:
       - "80:80"
     volumes:
       - .:/var/www/laravel
-      - ./Projetos/favoo-app/docker/default.conf:/etc/nginx/conf.d/default.conf
+      - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
     networks:
       - laravel_app
 
