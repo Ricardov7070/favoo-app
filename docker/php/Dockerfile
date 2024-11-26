@@ -12,7 +12,7 @@ RUN apt-get update && apt-get install -y \
     libzip-dev \
     libonig-dev \
     libcurl4-openssl-dev \
-    libxml2-dev && \
+    libxml2-dev \
     procps && \
     apt-get clean
 
