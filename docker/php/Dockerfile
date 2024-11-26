@@ -36,17 +36,11 @@ RUN php -v && node -v && npm -v
 # Configurando o diretório de trabalho
 WORKDIR /var/www/laravel
 
-# Copiando o composer.json e o composer.lock para instalar dependências
-COPY composer.json composer.lock ./
+# Copiando arquivos do projeto para o container
+COPY . .
 
 # Instalando dependências do Composer
 RUN composer install --no-dev --optimize-autoloader
-
-# Copiando o restante do projeto para o container
-COPY . .
-
-# Gerando a chave do Laravel
-RUN php artisan key:generate
 
 # Configurando permissões
 RUN chmod -R 775 storage bootstrap/cache && \
