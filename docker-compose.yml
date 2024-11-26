@@ -3,7 +3,7 @@ version: '3.8'
 services:
   laravel:
     build:
-      context: .
+      context: .\docker\php\
       dockerfile: Dockerfile
     image: laravel-php-node:22.04
     container_name: laravel-container
