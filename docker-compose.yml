@@ -1,8 +1,8 @@
 services:
   laravel:
     build:
-      context: ./docker/php/
-      dockerfile: Dockerfile
+      context: ./Documents/favoo-app
+      dockerfile: ./docker/php/Dockerfile
     image: laravel-php-node:22.04
     container_name: laravel-container
     restart: always
@@ -20,7 +20,7 @@ services:
       DB_USERNAME: ${DB_USERNAME}
       DB_PASSWORD: ${DB_PASSWORD}
     volumes:
-      - .:/var/www/laravel
+      - ./Documents/favoo-app:/var/www/laravel
       - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
     depends_on:
       - mysql
