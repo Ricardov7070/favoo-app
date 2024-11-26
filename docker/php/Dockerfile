@@ -26,11 +26,12 @@ RUN add-apt-repository ppa:ondrej/php -y && \
     php8.1-curl \
     php8.1-zip \
     php8.1-bcmath \
-    php8.1-tokenizer && \
+    php8.1-tokenizer \
+    php8.1-fpm && \
     apt-get clean
 
 # Verificando a versão do PHP
-RUN php -v | grep "PHP 8.1.3"
+RUN php -v
 
 # Instalando o Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
@@ -44,13 +45,19 @@ RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - && \
     apt-get autoremove -y
 
 # Verificando a versão do Node.js
-RUN node -v | grep "v18.16.0" && npm -v
+RUN node -v && npm -v
 
 # Configurando o diretório de trabalho
 WORKDIR /var/www/laravel
 
-# Instalando o Laravel na versão 10.24.0
-RUN composer create-project --prefer-dist laravel/laravel="10.24.0" .
+# Copiando arquivos do projeto para o container
+COPY . .
+
+# Instalando dependências do Composer
+RUN composer install --no-dev --optimize-autoloader
+
+# Gerando a chave do Laravel
+RUN php artisan key:generate
 
 # Configurando permissões
 RUN chmod -R 775 storage bootstrap/cache && \
