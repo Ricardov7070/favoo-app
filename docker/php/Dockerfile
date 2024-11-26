@@ -52,5 +52,5 @@ RUN npm install && npm run build
 # Expondo a porta 5000
 EXPOSE 5000
 
-# Comando para iniciar o servidor
-CMD ["php-fpm"]
+# Comando para iniciar o servidor embutido do Laravel
+CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=5000"]
