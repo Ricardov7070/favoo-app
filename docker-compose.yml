@@ -27,7 +27,7 @@ services:
       - laravel_app
     labels:
     - "traefik.enable=true"
-    - "traefik.http.routers.laravel.rule=Host(`localhost`)"
+    - "traefik.http.routers.laravel.rule=PathPrefix(`/`)"
     - "traefik.http.services.laravel.loadbalancer.server.port=5000"
     - "traefik.http.routers.laravel.entrypoints=web"
 
