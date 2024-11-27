@@ -105,9 +105,9 @@ services:
 #     networks:
 #       - laravel_app
 
-# networks:
-#   laravel_app:
-#     driver: bridge
+networks:
+  laravel_app:
+    driver: bridge
 
 volumes:
   mysql-data:
