@@ -25,6 +25,11 @@ services:
       - redis
     networks:
       - laravel_app
+    labels:
+    - "traefik.enable=true"
+    - "traefik.http.routers.laravel.rule=Host(`localhost`)"
+    - "traefik.http.services.laravel.loadbalancer.server.port=5000"
+    - "traefik.http.routers.laravel.entrypoints=web"
 
   mysql:
     image: mysql:8.0
