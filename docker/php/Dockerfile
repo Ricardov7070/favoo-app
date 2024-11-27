@@ -50,7 +50,7 @@ RUN chmod -R 775 storage bootstrap/cache && \
 RUN npm install && npm run build
 
 # Expondo a porta 5000
-EXPOSE 9000
+EXPOSE 5000
 
 # Comando para iniciar o servidor embutido do Laravel
 CMD ["php-fpm"]
