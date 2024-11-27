@@ -42,6 +42,9 @@ COPY . .
 # Instalando dependências do Composer
 RUN composer install --no-dev --optimize-autoloader
 
+# Gerando a chave do Laravel
+RUN php artisan key:generate
+
 # Configurando permissões
 RUN chmod -R 775 storage bootstrap/cache && \
     chown -R www-data:www-data /var/www/laravel
