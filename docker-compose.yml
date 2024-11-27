@@ -1,11 +1,10 @@
 services:
 
-  laravel:
+  laravel-1:
     build:
       context: .
       dockerfile: ./docker/php/Dockerfile
-    image: laravel-php-node:22.04
-    container_name: laravel-container
+    container_name: laravel-1
     restart: always
     tty: true
     environment:
@@ -16,11 +15,110 @@ services:
       DB_HOST: mysql
       DB_PORT: 3306
       DB_DATABASE: ${DB_DATABASE}
-      DB_USERNAME: ${DB_USERNAME}ps aux | grep php-fpm
+      DB_USERNAME: ${DB_USERNAME}
       DB_PASSWORD: ${DB_PASSWORD}
     volumes:
       - .:/var/www/laravel
-      - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - mysql
+      - redis
+    networks:
+      - laravel_app
+
+  laravel-2:
+    build:
+      context: .
+      dockerfile: ./docker/php/Dockerfile
+    container_name: laravel-2
+    restart: always
+    tty: true
+    environment:
+      APP_ENV: ${APP_ENV}
+      APP_KEY: ${APP_KEY}
+      APP_DEBUG: ${APP_DEBUG}
+      APP_URL: ${APP_URL}
+      DB_HOST: mysql
+      DB_PORT: 3306
+      DB_DATABASE: ${DB_DATABASE}
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - .:/var/www/laravel
+    depends_on:
+      - mysql
+      - redis
+    networks:
+      - laravel_app
+
+  laravel-3:
+    build:
+      context: .
+      dockerfile: ./docker/php/Dockerfile
+    container_name: laravel-3
+    restart: always
+    tty: true
+    environment:
+      APP_ENV: ${APP_ENV}
+      APP_KEY: ${APP_KEY}
+      APP_DEBUG: ${APP_DEBUG}
+      APP_URL: ${APP_URL}
+      DB_HOST: mysql
+      DB_PORT: 3306
+      DB_DATABASE: ${DB_DATABASE}
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - .:/var/www/laravel
+    depends_on:
+      - mysql
+      - redis
+    networks:
+      - laravel_app
+
+  laravel-4:
+    build:
+      context: .
+      dockerfile: ./docker/php/Dockerfile
+    container_name: laravel-4
+    restart: always
+    tty: true
+    environment:
+      APP_ENV: ${APP_ENV}
+      APP_KEY: ${APP_KEY}
+      APP_DEBUG: ${APP_DEBUG}
+      APP_URL: ${APP_URL}
+      DB_HOST: mysql
+      DB_PORT: 3306
+      DB_DATABASE: ${DB_DATABASE}
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - .:/var/www/laravel
+    depends_on:
+      - mysql
+      - redis
+    networks:
+      - laravel_app
+
+  laravel-5:
+    build:
+      context: .
+      dockerfile: ./docker/php/Dockerfile
+    container_name: laravel-5
+    restart: always
+    tty: true
+    environment:
+      APP_ENV: ${APP_ENV}
+      APP_KEY: ${APP_KEY}
+      APP_DEBUG: ${APP_DEBUG}
+      APP_URL: ${APP_URL}
+      DB_HOST: mysql
+      DB_PORT: 3306
+      DB_DATABASE: ${DB_DATABASE}
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - .:/var/www/laravel
     depends_on:
       - mysql
       - redis
@@ -66,6 +164,12 @@ services:
       - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
     ports:
       - "8081:80"
+    depends_on:
+      - laravel-1
+      - laravel-2
+      - laravel-3
+      - laravel-4
+      - laravel-5
     networks:
       - laravel_app
 
