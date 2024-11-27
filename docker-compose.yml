@@ -20,16 +20,12 @@ services:
       DB_PASSWORD: ${DB_PASSWORD}
     volumes:
       - .:/var/www/laravel
+      - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
     depends_on:
       - mysql
       - redis
     networks:
       - laravel_app
-    labels:
-    - "traefik.enable=true"
-    - "traefik.http.routers.laravel.rule=PathPrefix(`/`)"
-    - "traefik.http.services.laravel.loadbalancer.server.port=5000"
-    - "traefik.http.routers.laravel.entrypoints=web"
 
   mysql:
     image: mysql:8.0
@@ -68,26 +64,13 @@ services:
     networks:
       - laravel_app
 
-  traefik:
-    image: traefik:latest
-    command:
-      - --providers.docker=true
-      - --entrypoints.web.address=:80
-      - --entrypoints.websecure.address=:443
-      - --providers.docker.exposedbydefault=false
-      - --providers.docker.network=laravel_app
-      - --providers.docker.endpoint=unix:///var/run/docker.sock
-      - --certificatesresolvers.le.acme.httpchallenge.entrypoint=web
-      - --certificatesresolvers.le.acme.email=ricardov7070@gmail.com
-      - --certificatesresolvers.le.acme.storage=/letsencrypt/acme.json
-      - --api.insecure=true
-    ports:
-      - "80:80"
-      - "443:443"
-      - "8080:8080" # Apenas para painel
+  nginx:
+    image: nginx:alpine
+    container_name: nginx-container
+    restart: always
     volumes:
-      - ./traefik/certificates:/letsencrypt
-      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+      - .:/var/www/laravel
+      - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
     networks:
       - laravel_app
 
