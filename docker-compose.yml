@@ -71,6 +71,8 @@ services:
     volumes:
       - .:/var/www/laravel
       - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
+      - ./docker/nginx/cert.pem:/etc/nginx/ssl/cert.pem
+      - ./docker/nginx/cert.key:/etc/nginx/ssl/cert.key
     networks:
       - laravel_app
 
