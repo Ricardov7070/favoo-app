@@ -173,6 +173,20 @@ services:
     networks:
       - laravel_app
 
+  ngrok:
+    image: ngrok/ngrok:latest
+    container_name: ngrok-container
+    restart: always
+    environment:
+      - NGROK_AUTHTOKEN=2pSWLJmWY9h42RfQacngPjR3NV7_46y2urodZwKejHA8iHSKi
+    command: http nginx:80
+    networks:
+      - laravel_app
+    depends_on:
+      - nginx
+    ports:
+      - "4040:4040"
+
 networks:
   laravel_app:
     driver: bridge
