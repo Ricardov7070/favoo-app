@@ -52,6 +52,13 @@ RUN chmod -R 775 storage bootstrap/cache && \
 # Instalando dependências de frontend do Laravel (opcional, para Laravel Mix ou Vite)
 RUN npm install && npm run build
 
+# Instalando extensões PHP adicionais, incluindo pdo_mysql
+RUN docker-php-ext-install zip mbstring curl xml bcmath pdo pdo_mysql && \
+    docker-php-ext-enable pdo pdo_mysql
+
+# Copiando arquivos do projeto para o container
+COPY . .
+
 # Expondo a porta 5000
 EXPOSE 5000
 
